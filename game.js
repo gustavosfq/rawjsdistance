@@ -21,18 +21,34 @@ onkeydown = onkeyup = e => {
 
 setInterval(update, 33);
 
+function distance(){
+    return Math.sqrt( ((player2.x - player.x)**2) + ((player2.y - player.y)**2) );
+}
+
 function draw(){
-    c.fillStyle="black";
+    var distances = distance();
+    
+    if(distances < 60){
+        c.fillStyle="#ea4335";
+    }else{
+        c.fillStyle="black";
+    }
     c.fillRect(0,0, canvas.width, canvas.height);
 
-    c.fillStyle = "white";
-    c.fillRect(player.x, player.y, player.s, player.s);
+    c.fillStyle = "white"; 
+    c.beginPath();
+    c.arc(player.x,player.y,player.s,0,Math.PI*2,true);
+    c.closePath();
+    c.fill();
 
-    c.fillStyle = "red";
-    c.fillRect(player2.x, player2.y, player2.s, player2.s);
+    c.fillStyle = "red"; 
+    c.beginPath();
+    c.arc(player2.x,player2.y,player2.s,0,Math.PI*2,true);
+    c.closePath();
+    c.fill();
 
     c.fillStyle = "white";
-    c.fillText("Distancia : " + distance(), 20, 20);
+    c.fillText("Distancia : " + distances, 20, 20);
 }
 
 function update(){
@@ -49,9 +65,4 @@ function update(){
     if(map[40]){
         player.y += velocity;
     }
-}
-
-function distance(){
-
-    return Math.sqrt( ((player2.x - player.x)**2) + ((player2.y - player.y)**2) );
 }
